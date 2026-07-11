@@ -3,7 +3,12 @@ import { useContext } from "react";
 import type { JSX } from "react/jsx-runtime";
 import LoginPage from "../features/auth/LoginPage";
 import HouseholdListPage from "../features/households/HouseholdListPage";
+import HouseholdCreatePage from "../features/households/HouseholdCreatePage";
+import HouseholdDetailPage from "../features/households/HouseholdDetailPage";
 import SignupPage from "../features/auth/SignupPage";
+import  CatalogPage  from "../features/catalog/CatalogPage";
+import  ItemCreatePage  from "../features/catalog/ItemCreatePage";
+import  InventoryPage  from "../features/inventory/InventoryPage";
 import { AuthContext } from "../features/auth/AuthContext";
 
 
@@ -58,6 +63,45 @@ export function AppRoutes() {
                     <HouseholdListPage />
                 </RequireAuth>
             } />
+
+            <Route path="/households/create"
+            element={
+                <RequireAuth>
+                    <HouseholdCreatePage />
+                </RequireAuth>
+            } />
+
+            <Route path="/households/:householdid"
+            element={
+                <RequireAuth>
+                    <HouseholdDetailPage />
+                </RequireAuth>
+            } />
+
+            <Route path="/households/:householdid/catalog"
+            element={
+                <RequireAuth>
+                    <CatalogPage />
+                </RequireAuth>
+            } />
+
+            <Route path="/households/:householdid/catalog/create"
+            element={
+                <RequireAuth>
+                    <ItemCreatePage />
+                </RequireAuth>
+
+            } />
+
+            <Route path="/household/:householdid/inventory"
+            element={
+                <RequireAuth>
+                    <InventoryPage />
+                </RequireAuth>
+            } />
+
+
+
 
 
             <Route path="*"
