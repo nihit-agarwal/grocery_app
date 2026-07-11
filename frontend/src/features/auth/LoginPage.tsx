@@ -76,19 +76,18 @@ export default function LoginPage() {
                             radius="md"
                             />
 
+                        
+                            {error ? (
+                                <Alert color="red" variant="light"  title="Login Failure">
+                                    {error}
+                                </Alert>
+                                ) : null}
+
+                            <Button type="submit" loading={submitting} size="md" radius="xl" fullWidth>
+                                {submitting ? "Logging in ..." : "Log in"}
+                            </Button>
+
                         </Stack>
-                        
-
-                        
-                        {error ? (
-                            <Alert color="red" variant="light"  title="Login Failure">
-                                {error}
-                            </Alert>
-                            ) : null}
-
-                        <Button type="submit" loading={submitting} size="md" radius="xl" fullWidth>
-                            {submitting ? "Logging in ..." : "Log in"}
-                        </Button>
 
                     </form>
                 </Stack>
