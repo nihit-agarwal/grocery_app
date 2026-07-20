@@ -48,11 +48,16 @@ class InventoryListView(APIView):
             household_id = household_id
         )
 
+        # Get the item name
+        
+
+
         data = [
             {
                 "row_id": str(row.id),
                 "household_id": str(row.household_id),
                 "item_id": str(row.item.id),
+                "item_name": row.item.item_name,
                 "purchased_on": row.purchased_on,
                 "expiry_date": row.expiry_date,
                 "quantity": row.qty,

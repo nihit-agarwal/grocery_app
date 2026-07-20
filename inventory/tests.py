@@ -5,7 +5,7 @@ from rest_framework.test import APITestCase
 from catalog.models import Catalog
 from households.models import Household, HouseholdMember
 from inventory.models import Inventory
-
+from decimal import Decimal
 User = get_user_model()
 
 
@@ -158,6 +158,11 @@ class InventoryViewTests(APITestCase):
 		self.assertEqual(res.status_code, status.HTTP_200_OK)
 		self.assertIn("inventory", res.data)
 		self.assertEqual(len(res.data["inventory"]), 1)
+		returned_row = res.data["inventory"][0]
+		self.assertEqual(returned_row["item_id"], str(self.catalog_item.id))
+		self.assertEqual(returned_row["item_name"], "Milk")
+		self.assertEqual(returned_row["quantity"], Decimal("3.00"))
+		self.assertEqual(returned_row["unit"], "l")
 
 	def test_get_inventory_rows_for_item(self):
 		Inventory.objects.create(
