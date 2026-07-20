@@ -49,6 +49,7 @@ class CatalogListView(APIView):
 
         data = [
             {
+                "item_id": item.id,
                 "item_name": item.item_name,
                 "item_type": item.item_type,
                 "created_at": item.created_at,

@@ -40,7 +40,7 @@ class CatalogViewTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_list_catalog_items(self):
-        Catalog.objects.create(
+        item = Catalog.objects.create(
             household=self.household,
             item_name="Milk",
             item_type="dairy",
@@ -50,6 +50,12 @@ class CatalogViewTests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn("items", res.data)
         self.assertEqual(len(res.data["items"]), 1)
+        returned_item = res.data["items"][0]
+        self.assertEqual(str(returned_item["item_id"]), str(item.id))
+        self.assertEqual(returned_item["item_name"], "Milk")
+        self.assertEqual(returned_item["item_type"], "dairy")
+        self.assertIn("created_at", returned_item)
+        self.assertIn("updated_at", returned_item)
 
     def test_get_catalog_item(self):
         item = Catalog.objects.create(
