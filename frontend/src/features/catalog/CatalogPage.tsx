@@ -4,14 +4,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Paper, Stack, Title, Text, Group, Loader, Alert, Card, Button } from "@mantine/core";
 
 
-type catalogItem = {
+export type catalogItem = {
+    item_id: string,
     item_name: string;
     item_type: string;
     created_at: string;
     updated_at: string;
 };
 
-type itemListResponse = {
+export type itemListResponse = {
     items: catalogItem[];
 };
 
@@ -70,7 +71,7 @@ export default function CatalogPage() {
                     ): null}
 
                     {error ? (
-                        <Alert color="red" title="Could not load households">
+                        <Alert color="red" title="Could not load catalog">
                             {error}
                         </Alert>
                     ): null}
