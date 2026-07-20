@@ -82,7 +82,7 @@ export default function HouseholdDetailPage() {
                         radius="lg"
                         p="lg"
                         component={Link}
-                        to={"/household/" + householdId + "/inventory"}
+                        to={"/households/" + householdId + "/inventory"}
                         >
                             Inventory
                         </Card>
@@ -91,6 +91,8 @@ export default function HouseholdDetailPage() {
                         withBorder
                         radius="lg"
                         p="lg"
+                        component={Link}
+                        to={"/households/" + householdId + "/cart"}
                         >
                             Cart
                         </Card>

@@ -9,6 +9,9 @@ import SignupPage from "../features/auth/SignupPage";
 import  CatalogPage  from "../features/catalog/CatalogPage";
 import  ItemCreatePage  from "../features/catalog/ItemCreatePage";
 import  InventoryPage  from "../features/inventory/InventoryPage";
+import ItemAddPage from "../features/inventory/ItemAddPage";
+import CartPage from "../features/cart/CartPage";
+import CartAddPage from "../features/cart/CartAddPage";
 import { AuthContext } from "../features/auth/AuthContext";
 
 
@@ -93,10 +96,31 @@ export function AppRoutes() {
 
             } />
 
-            <Route path="/household/:householdid/inventory"
+            <Route path="/households/:householdid/inventory"
             element={
                 <RequireAuth>
                     <InventoryPage />
+                </RequireAuth>
+            } />
+
+            <Route path="/households/:householdid/inventory/add"
+            element={
+                <RequireAuth>
+                    <ItemAddPage />
+                </RequireAuth>
+            } />
+
+            <Route path="/households/:householdid/cart"
+            element={
+                <RequireAuth>
+                    <CartPage />
+                </RequireAuth>
+            } />
+
+            <Route path="/households/:householdid/cart/add"
+            element={
+                <RequireAuth>
+                    <CartAddPage />
                 </RequireAuth>
             } />
 
