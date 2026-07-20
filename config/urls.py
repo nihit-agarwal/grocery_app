@@ -22,5 +22,6 @@ urlpatterns = [
     path("", include("households.urls")),
     path("", include("catalog.urls")),
     path("", include("inventory.urls")),
+    path("", include("cart.urls")),
     path("auth/", include("auth_api.urls")),
 ]
