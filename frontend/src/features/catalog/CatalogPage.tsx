@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { http } from "../../services/http";
-import { useNavigate, useParams } from "react-router-dom";
-import { Paper, Stack, Title, Text, Group, Loader, Alert, Card, Button } from "@mantine/core";
+import { replace, useNavigate, useParams } from "react-router-dom";
+import { Paper, Stack, Title, Text, Group, Loader, Alert, Card, Button, ActionIcon } from "@mantine/core";
+import { IconArrowLeft } from "@tabler/icons-react";
 
 
 export type catalogItem = {
@@ -53,6 +54,17 @@ export default function CatalogPage() {
         <main className="page">
             <Paper withBorder shadow="md" radius="xl" p="xl" maw={760} mx="auto">
                 <Stack gap="lg">
+                    <Group justify="space-between" align="center">
+                        <ActionIcon
+                        variant="light"
+                        color="gray"
+                        radius="xl"
+                        aria-label="Back to household"
+                        onClick={() => navigate(`/households/${householdid}`, {replace: true})}
+                        >
+                            <IconArrowLeft size={18} />
+                        </ActionIcon>
+                    </Group>
                     <div>
                         <Text c="green.7" fw={700} tt="uppercase" size="sm">
                             Grocery App

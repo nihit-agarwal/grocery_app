@@ -1,6 +1,9 @@
 import {
+    ActionIcon,
+    Alert,
     Button,
     Card,
+    Group,
     Paper,
     Stack,
     Text,
@@ -9,6 +12,9 @@ import {
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { http } from "../../services/http";
 import type { JSX } from "react/jsx-runtime";
+import { IconArrowLeft } from "@tabler/icons-react";
+import { useEffect, useMemo, useState } from "react";
+import type { Household, HouseholdListResponse } from "./types";
 
 
 function IsOwner({children, role} : {children: JSX.Element; role: string}) {
@@ -18,17 +24,29 @@ function IsOwner({children, role} : {children: JSX.Element; role: string}) {
 export default function HouseholdDetailPage() {
 
     const { householdid } = useParams();
-    const location = useLocation();
+    const [error, setError] = useState("");
+    const [households, setHouseholds] = useState<Household[]>([]);
+    const [loading, setLoading] = useState(true);
+    
 
-    const state = location.state as 
-    | {
-        householdId?: string;
-        houseName?: string;
-        role?: string;
-        joinedAt?: string;
+    // Run GET method
+    useEffect(() => {
+        async function loadHouseholds() {
+            try {
+                setError("");
+                const response = await http.get<HouseholdListResponse>("/members/me");
+                setHouseholds(response.data.households);
+            } catch {
+                setError("Could not load your household right now")
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadHouseholds();
+    }, [])
 
-    }
-    | undefined;
+    // Extract the household details
+    const household = useMemo(() => households.find((household) => household.household_id === householdid), [households, householdid]);
     const navigate = useNavigate();
 
     async function deleteHousehold() {
@@ -41,13 +59,24 @@ export default function HouseholdDetailPage() {
         }
     }
 
-    const householdId = state?.householdId ?? householdid ?? "";
-    const householdName = state?.houseName ?? "Household";
-    const householdRole = state?.role ?? "member";
+    const householdId = household?.household_id ?? householdid ?? "";
+    const householdName = household?.house_name ?? "Household";
+    const householdRole = household?.role ?? "member";
     return (
         <main className="page">
             <Paper withBorder shadow="md" radius="xl" p="xl" maw={760} mx="auto">
                 <Stack gap="lg">
+                    <Group justify="space-between" align="center">
+                        <ActionIcon
+                        variant="light"
+                        color="gray"
+                        radius="xl"
+                        aria-label="Back to household"
+                        onClick={() => navigate(`/households`, {replace: true})}
+                        >
+                            <IconArrowLeft size={18} />
+                        </ActionIcon>
+                    </Group>
                     <div>
                         <Text c="green.7" fw={700} tt="uppercase" size="sm">
                             Grocery App
@@ -64,7 +93,11 @@ export default function HouseholdDetailPage() {
                         </Stack>
                     </IsOwner>
                     
-
+                    {error ? (
+                        <Alert color="red" title="Could not load the household">
+                            {error}
+                        </Alert>
+                    ): null}
 
                     <Stack gap="md">
                         <Card

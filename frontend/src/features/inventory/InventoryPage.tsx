@@ -1,7 +1,8 @@
-import { Button, Paper, Card, Stack, Text, Title, Group, Loader, Alert } from "@mantine/core";
+import { Button, Paper, Card, Stack, Text, Title, Group, Loader, Alert, ActionIcon } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { http } from "../../services/http";
+import { IconArrowLeft } from "@tabler/icons-react";
 
 type inventoryItem = {
     row_id: string;
@@ -67,6 +68,17 @@ export default function InventoryPage() {
         <main className="page">
             <Paper withBorder shadow="md" radius="xl" p="xl" maw={760} mx="auto">
                 <Stack gap="lg">
+                    <Group justify="space-between" align="center">
+                        <ActionIcon
+                        variant="light"
+                        color="gray"
+                        radius="xl"
+                        aria-label="Back to household"
+                        onClick={() => navigate(`/households/${householdid}`, {replace: true})}
+                        >
+                            <IconArrowLeft size={18} />
+                        </ActionIcon>
+                    </Group>
                     <div>
                         <Text c="green.7" fw={700} tt="uppercase" size="sm">
                             Grocery App
