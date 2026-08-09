@@ -285,3 +285,9 @@ password: TestPass123!
 3. Add the capability of retaining the correct household name from retreival. [x]]
 4. Add capability to have a new user sign up. [x]
 5. Add capability to include a current user into your household [Stretch]
+
+### Replanning
+Now that we have some core functionalities working, we need to replan the course
+of action for the app. The phase 1 needs to be corrected to account for other
+critical things like deployment, user management, and the upcoming phases need
+to be renewed to work according to business interest. 
