@@ -1,3 +1,5 @@
+# Personal log
+daily_log.md
 # ----------------------------
 # OS / editor noise
 # ----------------------------
@@ -145,3 +147,8 @@ pnpm-debug.log*
 .env.*
 !.env.example
 !.env.sample
+
+# ----------------------
+# Personal planning
+# ----------------------
+arch_log.md
