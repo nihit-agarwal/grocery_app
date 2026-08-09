@@ -1,12 +1,15 @@
-from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout, get_user_model
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
-
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+User = get_user_model()
 
 class CsrfCookieView(APIView):
     permission_classes = [AllowAny]
@@ -37,6 +40,44 @@ class SessionLoginView(APIView):
             status=status.HTTP_200_OK,
         )
 
+
+@method_decorator(csrf_protect, name="dispatch")
+class SessionSignupView(APIView):
+    permission_classes=[AllowAny]
+
+    def post(self, request):
+        username = request.data.get("username", "").strip()
+        password = request.data.get("password", "")
+        if not username:
+            return Response(
+                {"detail": "Username is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        user = User(username=username)
+
+        try:
+            validate_password(password=password, user=user)
+            user.set_password(password)
+            user.save()
+        except ValidationError as exc:
+            return Response(
+                {"detail": list(exc.messages)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except IntegrityError:
+            return Response(
+                {"detail": "Username is already taken"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        auth_login(request, user)
+        return Response(
+            {
+                "detail": "Signup successful",
+                "user": {"id": user.id, "username": user.username}
+            },
+            status=status.HTTP_201_CREATED,
+            
+        )
 
 @method_decorator(csrf_protect, name="dispatch")
 class SessionLogoutView(APIView):

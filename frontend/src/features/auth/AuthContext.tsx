@@ -8,6 +8,7 @@ type AuthContextType = {
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshAuth: () => Promise<void>;
+  signup: (username:string, password:string) => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -16,6 +17,7 @@ export const AuthContext = createContext<AuthContextType>({
   login: async () => {},
   logout: async() => {},
   refreshAuth: async() => {},
+  signup: async() => {},
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -42,6 +44,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsAuthenticated(false);
   }, [])
 
+  const signup = useCallback(async (username: string, password: string) => {
+    await http.get("/auth/csrf");
+    await http.post("/auth/signup", {username, password});
+    setIsAuthenticated(true);
+  }, []);
+
 
 
 
@@ -51,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loading, login, logout, refreshAuth }}>
+    <AuthContext.Provider value={{ isAuthenticated, loading, login, logout, refreshAuth, signup }}>
       {children}
     </AuthContext.Provider>
   );

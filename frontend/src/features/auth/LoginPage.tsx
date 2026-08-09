@@ -86,6 +86,12 @@ export default function LoginPage() {
                             <Button type="submit" loading={submitting} size="md" radius="xl" fullWidth>
                                 {submitting ? "Logging in ..." : "Log in"}
                             </Button>
+                            <Button
+                            size="md"
+                            radius="xl"
+                            fullWidth
+                            onClick={() => navigate("/signup")}
+                            >Sign Up</Button>
 
                         </Stack>
 
