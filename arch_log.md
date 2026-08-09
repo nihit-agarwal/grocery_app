@@ -280,5 +280,8 @@ password: TestPass123!
 
 ### Feauture List to Implement
 
-1. Add capability to return to household page.
-2. Add capability to return to households list page.
+1. In the Cart Page, Catalog Page, Inventory Page, add capability to go back to the main Households Detail Page [x]]
+2. From the Households Detail page , add capability to go back to the list of households page. [x]
+3. Add the capability of retaining the correct household name from retreival. [x]]
+4. Add capability to have a new user sign up. [x]
+5. Add capability to include a current user into your household [Stretch]
