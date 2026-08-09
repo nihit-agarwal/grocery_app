@@ -1,6 +1,10 @@
-export type HouseholdRouteState = {
-    householdId: string;
-    houseName: string;
+export type Household = {
+    household_id: string;
+    house_name: string;
     role: string;
-    joinedAt: string;
+    joined_at: string;
 }
+
+export type HouseholdListResponse = {
+    households: Household[];
+};

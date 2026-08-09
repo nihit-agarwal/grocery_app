@@ -11,19 +11,10 @@ import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import { http } from "../../services/http";
 import { Link, useNavigate } from "react-router-dom";
-import type { HouseholdRouteState } from "./types";
+import type { HouseholdListResponse, Household } from "./types";
 
 
-type Household = {
-    household_id: string;
-    house_name: string;
-    role: string;
-    joined_at: string;
-}
 
-type HouseholdListResponse = {
-    households: Household[];
-};
 
 export default function HouseholdListPage() {
     const {logout} = useContext(AuthContext);
